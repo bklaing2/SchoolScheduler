@@ -18,7 +18,16 @@ HONORS = True
 
 
 # Other variables
-username, pwd = input('Username: '), input('Password: ')
+try:
+    with open('data/user.dat', 'r') as user_data:
+        username, pwd = user_data.readlines()
+
+    if username == 'USERNAME' or pwd == 'PASSWORD' or username == '' or pwd == '':
+        raise FileNotFoundError
+except FileNotFoundError:
+    print('To save data, add your username and password to data/user.dat')
+    username, pwd = input('Username: '), input('Password: ')
+
 cas_title = 'Central Authentication Service'
 
 url_cas = 'https://cas.tamu.edu/cas/login?service=https://compass-sso.tamu.edu:443/ssomanager/c/SSB?pkg=bwykfcls.p_sel_crse_search;renew=true'
